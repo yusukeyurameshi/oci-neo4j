@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 echo "Running $0"
 
 public_ip=$(oci-public-ip -j | jq '.publicIp' | tr -d '"')
@@ -78,10 +79,10 @@ sed -i -e 's/dbms.directories.data=\/var\/lib\/neo4j\/data/dbms.directories.data
 sed -i -e '/dbms.connectors.default_listen_address=0.0.0.0/ s/^#//g' /etc/neo4j/neo4j.conf
 sed -i -e "s/#dbms.connectors.default_advertised_address=localhost/dbms.connectors.default_advertised_address=$private_ip/g" /etc/neo4j/neo4j.conf
 
-sed -i -e '/dbms.mode=CORE/ s/^#//g' /etc/neo4j/neo4j.conf
-sed -i -e '/causal_clustering.minimum_core_cluster_size_at_formation=3/ s/^#//g' /etc/neo4j/neo4j.conf
-sed -i -e '/causal_clustering.minimum_core_cluster_size_at_runtime=3/ s/^#//g' /etc/neo4j/neo4j.conf
-sed -i -e 's/#causal_clustering.discovery_listen_address=:5000/causal_clustering.discovery_listen_address=0.0.0.0:5000/g' /etc/neo4j/neo4j.conf
+sed -i -e 's/#dbms.mode=CORE/dbms.mode=READ_REPLICA/g' /etc/neo4j/neo4j.conf
+#sed -i -e '/causal_clustering.minimum_core_cluster_size_at_formation=3/ s/^#//g' /etc/neo4j/neo4j.conf
+#sed -i -e '/causal_clustering.minimum_core_cluster_size_at_runtime=3/ s/^#//g' /etc/neo4j/neo4j.conf
+#sed -i -e 's/#causal_clustering.discovery_listen_address=:5000/causal_clustering.discovery_listen_address=0.0.0.0:5000/g' /etc/neo4j/neo4j.conf
 
 #this list should be built and not hard coded
 list="core-0:5000,core-1:5000,core-2:5000"
