@@ -9,3 +9,8 @@
 *.tfvars
 
 *scratch*
+.idea/libraries/oci_neo4j.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/oci-neo4j.iml
+.idea/vcs.xml
