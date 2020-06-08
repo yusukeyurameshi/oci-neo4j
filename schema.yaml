@@ -1,0 +1,105 @@
+title: "Oracle Neo4J Deployment"
+description: "Reference Architecture of Neo4J deployment"
+schemaVersion: 1.0.1
+version: "20200608"
+locale: "en"
+
+groupings:
+  - title: "General Configurations"
+    visible: false
+    variables:
+      - compartment_ocid
+      - tenancy_ocid
+      - region
+
+  - title: "Specific Configurations"
+    visible: true
+    variables:
+      - ssh_public_key
+      - CPE_IPAddress
+      - IPSec_StaticRoute
+
+  - title: "Optional Configurations"
+    visible: true
+    variables:
+      - Instance_count
+      - Instance_shape
+      - InstanceOS
+      - InstanceOSVersion
+
+variables:
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    # type: string
+    required: true
+    title: "Compartment"
+    description: "The compartment in which to create compute instance"
+
+  tenancy_ocid:
+    type: string
+    required: true
+    title: "Tenancy_OCID"
+
+  region:
+    type: string
+    required: true
+    title: "Region"
+
+  ssh_public_key:
+    type: string
+    required: true
+    title: "ssh_public_key"
+    description: "SSH Public Key open format."
+
+  CPE_IPAddress:
+    type: string
+    required: true
+    title: "CPE_IPAddress"
+    description: "Costumer Premises Equipment IP Address."
+
+  IPSec_StaticRoute:
+    type: string
+    required: true
+    title: "IPSec_StaticRoute"
+    description: "IPSec Static Route."
+
+  Instance_count:
+    type: string
+    required: true
+    title: "Instance_count"
+    description: "Instance Count. (minimum 3 instances for Neo4j Core Servers)"
+
+  Instance_shape:
+    type: string
+    required: true
+    title: "Instance_shape"
+    description: "Instance Shape."
+
+  InstanceOS:
+    type: string
+    required: true
+    title: "InstanceOS"
+    description: "Instance OS."
+
+  InstanceOSVersion:
+    type: string
+    required: true
+    title: "InstanceOSVersion"
+    description: "Instance OS Version."
+
+outputGroups:
+  - title: "Apex Deployment details"
+    outputs:
+      - ${Read-Priv-server-private-IPs}
+      - ${Core-Priv-server-private-IPs}
+
+outputs:
+  Read-Priv-server-private-IPs:
+    type: string
+    title: "Ips Read Servers"
+    visible: true
+
+  Core-Priv-server-private-IPs:
+    type: string
+    title: "Ips Core Servers"
+    visible: true
